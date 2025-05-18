@@ -1,12 +1,27 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>flask app</title>
-</head>
-<body>
+{% extends "base.html" %}
+{% block title %}Index Page{% endblock %}
+
+
+{% block content %}
   <h1>Hello World</h1>
-  
-</body>
-</html>
+  <p>{{ myValue }}</p>
+  <p>{{  myResult }}</p>
+  <p>{{  myList }}</p>
+
+
+  <ul>
+    {% for item in myList %}
+      {% if item == 90 %}
+        <li style="color: red">{{ item }}</li>
+      {% else %}
+        <li>{{ item }}</li>
+      {% endif %}
+    {% endfor %}
+  </ul>
+
+  <ul>
+    {% for item in myArr %}
+      <li {% if item == 30  %}style="color:red"{% endif %}>{{ item }}</li>
+    {% endfor %}
+  </ul>
+{% endblock %}

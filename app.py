@@ -7,7 +7,9 @@ def index():
   # you can dynamicallly change the content of the html file by passing certain keyword argumants...
   myValue = 'Flask'
   myResult = 5.00
-  return render_template('index.html', myValue=myValue, myResult=myResult)
+  myList = [150, 20, 90, 'Flask']
+  myArr = [160, 30, 'Python']
+  return render_template('index.html', myValue=myValue, myResult=myResult, myList=myList, myArr=myArr)
 
 @app.route('/greet/<name>')
 def greet(name):
