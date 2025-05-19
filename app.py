@@ -1,4 +1,4 @@
-from flask import Flask, render_template, make_response, request
+from flask import Flask, render_template, make_response, request, redirect, url_for
 
 app = Flask(__name__, template_folder='templates')
 
@@ -23,10 +23,17 @@ def hello():
   response.headers['content-type'] = 'application/octet/stream'
   return response
 
+
+# to you make the route be /jnviddvjnjnjnvjnv, since you've used url_for in the template to make it dynamic
 @app.route('/other')
 def other():
   someText = 'hello World'
   return render_template('other.html', someText=someText)
+
+@app.route('/redirect_endpoint')
+def redirect_endpoint():
+  return redirect(url_for('other'))
+
 
 @app.template_filter('reverse_string')
 def reverse_string(s):
