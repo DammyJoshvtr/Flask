@@ -47,5 +47,18 @@ def repeat(s, times=2):
 def alternate_case(s):
   return ''.join([c.upper() if i % 2 == 0 else c.lower() for i, c in enumerate(s)])
 
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+  if request.method == 'GET':
+    return render_template('login.html')
+  elif request.method == 'POST':
+    username = request.form.get('username')
+    password =  request.form.get('password')
+    
+    if username == 'damilola' and password == 'password':
+      return 'Success'
+    else: return 'Failure Logging In'
+      
+
 if __name__ == "__main__":
   app.run(debug=True, host='0.0.0.0', port=5001)
