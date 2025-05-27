@@ -1,4 +1,6 @@
-from flask import Flask, render_template, make_response, request, redirect, url_for
+from flask import Flask, render_template, make_response, request, redirect, url_for, Response
+
+import pandas as pd
 
 app = Flask(__name__, template_folder='templates')
 
@@ -47,6 +49,7 @@ def repeat(s, times=2):
 def alternate_case(s):
   return ''.join([c.upper() if i % 2 == 0 else c.lower() for i, c in enumerate(s)])
 
+# dummy login form
 @app.route('/login', methods=['GET', 'POST'])
 def login():
   if request.method == 'GET':
@@ -58,7 +61,30 @@ def login():
     if username == 'damilola' and password == 'password':
       return 'Success'
     else: return 'Failure Logging In'
-      
+    
+@app.route('/file_upload', methods=['POST'])
+def file_upload():
+  file = request.files['file']
+  
+  if file.content_type == 'text/plain':
+    return file.read().decode()
+  
+
+# creating a download functionality to convert excel to csv...
+@app.route('/convert_csv', methods=['POST'])
+def convert_csv():
+  file= request.files['file']
+  
+  df = pd.read_excel(file)
+  
+  response = Response(
+    df.to_csv(), #since a path is not specified an object would be returned
+    mimetype='text/csv',
+    headers={
+      'Content=Disposition': 'attachment: filename=result.csv'
+    }
+  )
+  return response
 
 if __name__ == "__main__":
   app.run(debug=True, host='0.0.0.0', port=5001)
